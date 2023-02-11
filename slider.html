@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slider</title>
+</head>
+<body>
+    <div class="slider-wrapper" >
+            <div class="slider-wrapper__content">
+                <div class="slider-image" >
+                    First
+                </div>
+                <div class="slider-image">
+                    Second
+                </div>
+                <div class="slider-image" >
+                    Third
+                </div>
+                <div class="slider-image" >
+                    4
+                </div>
+                <div class="slider-image" >
+                    5
+                </div>
+                <div class="slider-image" >
+                    6
+                </div>
+                <div class="slider-image" >
+                    7
+                </div>
+                <div class="slider-image" >
+                  8
+                </div>
+                <div class="slider-image" >
+                    9
+                  </div>
+            </div>
+            <div class="offer__slider-prev"></div>
+            <div class="offer__slider-next"></div>
+        </div>
+        <style>
+    .slider-wrapper{
+        max-width: 500px;
+        margin: 150px auto;
+        overflow: hidden;
+         position: relative;
+    }
+     .slider-wrapper__content{
+         display: flex;
+     }
+     .offer__slider-prev:hover{
+         border-left: 35px solid #303030; 
+         border-top: 35px solid transparent; 
+         border-bottom: 35px solid transparent; 
+     }
+     .offer__slider-next:hover{
+         border-right: 35px solid #303030; 
+     }
+     .offer__slider-prev{
+         position: absolute;
+         left: 0px;
+         top: 50%;
+         margin-top: -30px;
+         width: 0;
+         height: 0;
+         transition: all .3s ease 0s;
+         border-top: 30px solid transparent;
+         border-bottom: 30px solid transparent;
+         border-left: 30px solid #303030; 
+         cursor: pointer;
+
+     }
+     .offer__slider-next{
+         transition: all .3s ease 0s;
+
+         position: absolute;
+         right: 0px;
+         top: 50%;
+         margin-top: -30px;
+         width: 0;
+         height: 0;
+         border-top: 30px solid transparent;
+         cursor: pointer;
+         border-bottom: 30px solid transparent;
+         border-right: 30px solid #303030; 
+     }
+     .slider-image{
+         width: 100%;
+         height: 400px;
+         color: #fff;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #600a0a;
+     }
+    .slider-image:nth-child(1){  
+            background: #600a0a;
+    }
+    .slider-image:nth-child(2){  
+            background: #c98812;
+    }
+    .slider-image:nth-child(3){  
+            background: #c9122b;
+    }
+    </style>
+    <script>
+        /*slider*/
+        const sliders = document.querySelectorAll('.slider-image'),
+              slider = document.querySelector('.slider-image'),
+              prev = document.querySelector('.offer__slider-prev'),
+              next =  document.querySelector('.offer__slider-next'),
+              slidersWrapper =document.querySelector('.slider-wrapper'),
+              slidersField = document.querySelector('.slider-wrapper__content'),
+              width = window.getComputedStyle(slidersWrapper).width;
+
+        let offset= 0;// отступ
+        slider.style.position = 'relative';
+
+        slidersField.style.width = 100 *sliders.length + '%';
+        slidersField.style.display = 'flex';
+        slidersField.style.transition = '0.6s all';
+
+
+        slidersWrapper.style.overflow = 'hidden';// чтобы все сладеры не показывались
+
+        sliders.forEach( function(slide, index) {
+            slide.style.width = width;
+        });
+
+        next.addEventListener('click',(e)=>{
+            if (offset == +width.slice(0, width.length -2) *(sliders.length -1)) { // width str == 500px
+            // это означает что мы долистали до конца
+                offset =0;
+                
+            }else{
+                console.log(width.slice(0, width.length -2))
+                offset += +width.slice(0, width.length -2);
+            }
+            slidersField.style.transform = `translateX(-${offset}px)`
+        })
+        prev.addEventListener('click',(e)=>{
+            if (offset == 0) { // 
+                offset = +width.slice(0, width.length -2)*(sliders.length -1);
+            }else{
+                console.log(width.slice(0, width.length -2))
+                offset -= +width.slice(0, width.length -2);
+            }
+            slidersField.style.transform = `translateX(-${offset}px)`
+        })
+    </script>
+</body>
+</html>
